@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="/socket.io/webchat.js"></script>
+	<script src="http://code.jquery.com/jquery-1.7.1.js"></script>
+	<title>Web chat</title>
+	<script>
+		$(document).ready(function(){
+			var socket = io.connect();
+			socket.on('message', function(data){
+				var out = '';
+				out +='<li>'
+				out +='<h3>' +data.name+'<h3>';
+				out +='<p>' +data.message+'</p>';
+				out +='<p>' +data.date+'</p>';
+				out +='</li>';
+
+				$(out).prepend('#content');
+			});
+				$('button').click(function(){
+					socket.emit('message', {
+						name: $('#name').val(),
+						message: $('#message').val(),
+						date: new date().toUTCString()
+					});
+				});
+			});
+	</script>
+</head>
+<body>
+	<h1>!Web chat!</h1><hr>
+	<input id ="text" />
+	<input id ="chat"/>
+	<button>send</button>
+	<ul id = "content">
+		
+	</ul>
+</body>
+</html>
